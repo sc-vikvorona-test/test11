@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 
-let settings = { theme: 'light', notifications: true };
+let settings = { theme: 'light', notifications: true, language: 'en' };
 
 const server = http.createServer((req, res) => {
   const { pathname } = url.parse(req.url, true);
@@ -24,6 +24,15 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       try {
         const update = JSON.parse(body);
+        // Validate language field
+        if (update.language !== undefined) {
+          const supported = ['en', 'fr', 'de', 'es', 'ja'];
+          if (!supported.includes(update.language)) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ error: `unsupported language: ${update.language}. Supported: ${supported.join(', ')}` }));
+            return;
+          }
+        }
         settings = { ...settings, ...update };
         res.writeHead(200);
         res.end(JSON.stringify(settings));
