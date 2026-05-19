@@ -1,0 +1,8 @@
+{
+  "name": "test11-settings-app",
+  "version": "1.0.0",
+  "description": "Simple settings API for auto-qa testing",
+  "main": "index.js",
+  "scripts": { "start": "node index.js" },
+  "engines": { "node": ">=18" }
+}
