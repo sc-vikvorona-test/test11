@@ -1,7 +1,13 @@
 const http = require('http');
 const url = require('url');
 
-let settings = { theme: 'light', notifications: true };
+let settings = {
+  theme: 'light',
+  notifications: true,
+  darkMode: false,
+};
+
+const VALID_THEMES = ['light', 'dark', 'system'];
 
 const server = http.createServer((req, res) => {
   const { pathname } = url.parse(req.url, true);
@@ -24,6 +30,16 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       try {
         const update = JSON.parse(body);
+        if (update.theme !== undefined && !VALID_THEMES.includes(update.theme)) {
+          res.writeHead(400);
+          res.end(JSON.stringify({ error: `invalid theme. Valid values: ${VALID_THEMES.join(', ')}` }));
+          return;
+        }
+        if (update.darkMode !== undefined && typeof update.darkMode !== 'boolean') {
+          res.writeHead(400);
+          res.end(JSON.stringify({ error: 'darkMode must be a boolean' }));
+          return;
+        }
         settings = { ...settings, ...update };
         res.writeHead(200);
         res.end(JSON.stringify(settings));
