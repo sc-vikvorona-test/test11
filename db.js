@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DB_FILE = path.join(__dirname, 'data.json');
+const DB_FILE = process.env.DATA_FILE || path.join(__dirname, 'data.json');
 
 function load() {
   if (!fs.existsSync(DB_FILE)) return { bookmarks: [], nextId: 1 };
