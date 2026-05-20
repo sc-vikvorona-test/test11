@@ -1,8 +1,8 @@
 {
-  "name": "test11-settings-app",
+  "name": "linksaver",
   "version": "1.0.0",
-  "description": "Simple settings API for auto-qa testing",
-  "main": "index.js",
-  "scripts": { "start": "node index.js" },
+  "description": "Bookmark manager API with web UI",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
   "engines": { "node": ">=18" }
 }

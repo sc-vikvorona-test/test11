@@ -1,0 +1,53 @@
+{
+  "repo_path": "/private/tmp/test11",
+  "app_description": "Minimal Node.js HTTP settings API built for auto-QA functional validation. Exposes a health check and a small in-memory settings store (theme, notifications) accessible via GET/POST /api/settings. Single-file app with no dependencies, deployed on Vercel.",
+  "tech_stack": {
+    "language": "JavaScript (Node.js >=18)",
+    "framework": "Node built-in http module (no framework)",
+    "dependencies": "none",
+    "hosting": "Vercel (@vercel/node)",
+    "storage": "in-memory (resets per cold start / invocation)"
+  },
+  "deployment": {
+    "model": "Vercel preview deployment per PR (vercel.json routes all paths to index.js via @vercel/node)",
+    "preview_url_pattern": "https://<project>-<hash>-<scope>.vercel.app",
+    "ci_tool": "Vercel (no GitHub Actions / other CI configured in repo)"
+  },
+  "auth": {
+    "mechanism": "none — API is fully unauthenticated; CORS open to *",
+    "test_credentials": null,
+    "signup_possible": false
+  },
+  "database": {
+    "type": "none — in-memory JS object in index.js; state does not persist across serverless invocations",
+    "migration_tool": null,
+    "seed_script": null
+  },
+  "api": {
+    "spec_path": "documented in README.md (no OpenAPI spec)",
+    "base_url_pattern": "https://<vercel-preview-domain>/"
+  },
+  "beliefs": [
+    "Single-file Node.js app: all logic lives in index.js using the built-in http module.",
+    "Three endpoints: GET /health -> {status:'ok'}; GET /api/settings -> current settings; POST /api/settings -> merges JSON body into settings and returns updated object.",
+    "Default settings are { theme: 'light', notifications: true }. POST does a shallow merge with no validation of field names or types.",
+    "Invalid JSON on POST returns 400 {error:'invalid json'}. Unknown routes return 404 {error:'not found'}.",
+    "CORS is wide open (Access-Control-Allow-Origin: *), OPTIONS preflight returns 200.",
+    "package.json has only a 'start' script (node index.js) and zero dependencies; no test framework, no linter, no build step.",
+    "Deployment is via Vercel; vercel.json routes every path to index.js compiled with @vercel/node. PR validation should hit the Vercel preview URL.",
+    "State is in-memory and per-instance — on Vercel serverless, POST changes are NOT guaranteed to persist between requests. PR tests should verify response shape rather than long-lived persistence.",
+    "Repo is brand new with a single commit ('init: settings API app'); no prior PR history to learn typical change patterns from.",
+    "No authentication, no database, no migrations, no seed scripts — validation can be done with simple HTTP requests."
+  ],
+  "gaps": [
+    "No existing tests, test command, or coverage config — automated validation must be written from scratch against the live preview URL.",
+    "No OpenAPI / JSON schema — endpoint contracts are inferred from README and source only.",
+    "No CI workflows (no .github/, no GitHub Actions); unclear if Vercel previews are auto-created on PR or require manual setup / linked project.",
+    "Exact Vercel project name / preview URL pattern is unknown — must be discovered from PR comments or Vercel API at validation time.",
+    "Serverless persistence behavior is ambiguous: in-memory state may or may not survive between rapid requests depending on instance reuse; tests asserting persistence will be flaky.",
+    "No environment variables documented beyond PORT; unclear if any are configured in Vercel.",
+    "No input validation rules — unclear which fields/values should be considered 'valid' for POST /api/settings beyond JSON parseability.",
+    "Only one commit in git history, so PR-style change patterns (refactors, bugfixes, feature adds) cannot be inferred."
+  ],
+  "confidence": 0.9
+}

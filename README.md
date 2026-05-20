@@ -1,18 +1,26 @@
-# test11 — Settings API
+# Linksaver
 
-Minimal Node.js settings API for auto-qa functional validation.
+A bookmark manager with a REST API and simple web UI.
 
-## Endpoints
+## API
 
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | /health | Health check |
-| GET | /api/settings | Get current settings |
-| POST | /api/settings | Update settings |
+| GET | /api/bookmarks | List all bookmarks |
+| POST | /api/bookmarks | Create bookmark `{ title, url, tags? }` |
+| GET | /api/bookmarks/:id | Get single bookmark |
+| PUT | /api/bookmarks/:id | Update bookmark |
+| DELETE | /api/bookmarks/:id | Delete bookmark |
 
-## Settings
+## Bookmark schema
 
-| Field | Type | Default |
-|-------|------|---------|
-| theme | string | "light" |
-| notifications | boolean | true |
+```json
+{ "id": 1, "title": "string", "url": "string", "tags": [], "favorite": false, "createdAt": "ISO8601" }
+```
+
+## Run
+
+```bash
+npm start   # port 3000, or PORT env var
+```
