@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 
-let settings = { theme: 'light', notifications: true };
+let settings = { theme: 'light', notifications: true, language: 'en', emailNotifications: false };
 
 const server = http.createServer((req, res) => {
   const { pathname } = url.parse(req.url, true);
@@ -24,6 +24,11 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       try {
         const update = JSON.parse(body);
+        if (update.emailNotifications !== undefined && typeof update.emailNotifications !== 'boolean') {
+          res.writeHead(400);
+          res.end(JSON.stringify({ error: 'emailNotifications must be a boolean' }));
+          return;
+        }
         settings = { ...settings, ...update };
         res.writeHead(200);
         res.end(JSON.stringify(settings));
