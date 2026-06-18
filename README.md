@@ -1,26 +1,12 @@
-# Linksaver
+# SARA Test Project
 
-A bookmark manager with a REST API and simple web UI.
+A minimal Java project used for SARA assessment testing.
 
-## API
-
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | /health | Health check |
-| GET | /api/bookmarks | List all bookmarks |
-| POST | /api/bookmarks | Create bookmark `{ title, url, tags? }` |
-| GET | /api/bookmarks/:id | Get single bookmark |
-| PUT | /api/bookmarks/:id | Update bookmark |
-| DELETE | /api/bookmarks/:id | Delete bookmark |
-
-## Bookmark schema
-
-```json
-{ "id": 1, "title": "string", "url": "string", "tags": [], "favorite": false, "createdAt": "ISO8601" }
+## Setup
+```
+mvn install
+mvn test
 ```
 
-## Run
-
-```bash
-npm start   # port 3000, or PORT env var
-```
+## Architecture
+Simple Maven project with a single utility class.
