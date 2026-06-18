@@ -1,11 +1,16 @@
 # SARA Test Project
 
-## Build
-```
-mvn package
+## Setup
+```bash
+npm install
 ```
 
-## Test
+## Run tests
+```bash
+npm test
 ```
-mvn test
+
+## Build
+```bash
+npm run build
 ```

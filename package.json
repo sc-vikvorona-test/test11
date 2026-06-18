@@ -1,8 +1,13 @@
 {
-  "name": "linksaver",
+  "name": "sara-test",
   "version": "1.0.0",
-  "description": "Bookmark manager API with web UI",
-  "main": "server.js",
-  "scripts": { "start": "node server.js" },
-  "engines": { "node": ">=18" }
+  "description": "SARA test project",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "build": "echo 'Build complete'"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
 }
