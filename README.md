@@ -10,3 +10,5 @@ mvn test
 
 ## Architecture
 Simple Maven project with a single utility class.
+
+<!-- trigger reanalysis: verifying issue AUTO-sort rank after reindex -->
